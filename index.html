@@ -3,254 +3,383 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Infinity Platform</title>
+<title>Brainrot Store</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
+/* ===== RESET ===== */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+
+/* ===== BODY ===== */
 body{
-margin:0;
-font-family:Arial;
-background:#0a0a0a;
+background:#0a0f1c;
 color:white;
 overflow-x:hidden;
 }
 
-/* GRID FUNDO */
-body::before{
-content:"";
+/* ===== PARTICULAS ===== */
+#particles{
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background-image:
-linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-background-size:40px 40px;
-z-index:-2;
-pointer-events:none; /* 🔥 ISSO RESOLVE */
+z-index:-1;
+pointer-events:none;
 }
 
+/* ===== HEADER ===== */
+header{
+padding:25px;
+text-align:center;
+background:#11182b;
+border-bottom:1px solid #00bfff40;
+}
+
+h1{
+font-size:32px;
+background:linear-gradient(90deg,#00bfff,#ffffff,#00bfff);
+background-size:200% auto;
+color:transparent;
+-webkit-background-clip:text;
+animation:shine 4s linear infinite;
+}
+
+@keyframes shine{
+0%{background-position:0%}
+100%{background-position:200%}
+}
+
+/* ===== NAV ===== */
 nav{
 display:flex;
-justify-content:space-between;
-padding:15px 40px;
-background:rgba(20,20,20,0.8);
-backdrop-filter:blur(10px);
+justify-content:center;
+gap:20px;
+padding:15px;
+background:#0f1629;
 }
 
 nav button{
-background:none;
-border:1px solid rgba(255,255,255,0.2);
-color:white;
-padding:8px 15px;
-border-radius:10px;
-cursor:pointer;
-margin-left:10px;
-}
-
-section{display:none;padding:60px 20px;text-align:center;}
-.active{display:block;}
-
-.hero h1{
-font-size:50px;
-position:relative;
-display:inline-block;
-}
-
-.hero h1::after{
-content:"";
-position:absolute;
-top:0;
-left:-100%;
-width:100%;
-height:100%;
-background:linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent);
-animation:shine 3s infinite;
-}
-
-@keyframes shine{100%{left:100%}}
-
-.btn{
-padding:10px 20px;
-margin:8px;
-border-radius:10px;
+background:#18223d;
 border:none;
-cursor:pointer;
-}
-
-.rgb{
-background:linear-gradient(45deg,red,orange,yellow,green,blue,indigo,violet);
-background-size:400%;
-animation:rgb 6s linear infinite;
+padding:10px 20px;
 color:white;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
 }
 
-@keyframes rgb{100%{background-position:400%}}
+nav button:hover{
+background:#00bfff;
+}
 
-.grid{display:flex;flex-wrap:wrap;justify-content:center;}
+/* ===== SECTIONS ===== */
+section{
+display:none;
+padding:30px;
+max-width:1200px;
+margin:auto;
+}
 
+.active{
+display:block;
+}
+
+/* ===== CARDS ===== */
 .card{
-background:rgba(255,255,255,0.05);
-padding:15px;
+background:#131c33;
+padding:20px;
 margin:10px;
-border-radius:15px;
-width:200px;
+border-radius:12px;
+display:inline-block;
+min-width:200px;
+text-align:center;
+transition:0.3s;
 }
 
-.gold{color:gold;}
-.silver{color:silver;}
-.bronze{color:#cd7f32;}
+.card:hover{
+transform:scale(1.05);
+}
+
+/* ===== INFINITY RGB ===== */
+.infinity{
+animation:rgb 3s linear infinite;
+}
+
+@keyframes rgb{
+0%{color:red}
+33%{color:lime}
+66%{color:blue}
+100%{color:red}
+}
+
+/* ===== LOGIN ===== */
+input{
+padding:8px;
+margin:5px;
+border-radius:6px;
+border:none;
+}
+
+.login-box{
+background:#11182b;
+padding:20px;
+border-radius:12px;
+max-width:400px;
+margin:auto;
+}
+
+/* ===== RANKING ===== */
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,td{
+padding:10px;
+border-bottom:1px solid #ffffff20;
+text-align:center;
+}
+
+.gold{color:gold}
+.silver{color:silver}
+.bronze{color:#cd7f32}
+
 </style>
 </head>
 <body>
 
+<canvas id="particles"></canvas>
+
+<header>
+<h1>Brainrot Premium Platform</h1>
+</header>
+
 <nav>
-<div>INFINITY</div>
-<div>
-<button onclick="show('home')">Vendas</button>
+<button onclick="show('vendas')">Vendas</button>
 <button onclick="show('parcerias')">Parcerias</button>
 <button onclick="show('termos')">Termos</button>
-<button onclick="show('games')">Minigames</button>
+<button onclick="show('minigame')">Minigames</button>
 <button onclick="show('login')">Login</button>
-</div>
 </nav>
 
-<!-- VENDAS -->
-<section id="home" class="active hero">
-<h1>Infinity Store</h1>
-<p>Itens digitais premium</p>
+<!-- ================= VENDAS ================= -->
+<section id="vendas" class="active">
+<h2>Área de Vendas</h2>
 
-<button class="btn" onclick="divinos()">Divinos</button>
-<button class="btn rgb" onclick="infinity()">Infinity</button>
+<h3>Divinos</h3>
+<div id="divinos"></div>
 
-<div id="produtos" class="grid"></div>
+<h3 class="infinity">Infinity</h3>
+<div id="infinity"></div>
+
 </section>
 
-<!-- PARCERIAS -->
+<!-- ================= PARCERIAS ================= -->
 <section id="parcerias">
-<h1>Parcerias</h1>
-<p>Para parcerias comerciais entre em contato via email oficial.</p>
-<p>contato@infinity.com</p>
+<h2>Parcerias</h2>
+<p>Se deseja parceria profissional, envie proposta comercial com mídia kit e métricas reais.</p>
+<p>Email: contato@brainrotstore.com</p>
 </section>
 
-<!-- TERMOS -->
+<!-- ================= TERMOS ================= -->
 <section id="termos">
-<h1>Termos e Política</h1>
-<p>Todos os produtos são digitais e entregues conforme descrição.</p>
-<p>Não há reembolso após envio.</p>
-<p>Proibida redistribuição ou revenda não autorizada.</p>
-<p>A loja não se responsabiliza por uso indevido.</p>
-<p>Podemos alterar os termos sem aviso prévio.</p>
+<h2>Termos e Política</h2>
+<p>Ao utilizar esta plataforma você concorda que:</p>
+<ul>
+<li>Produtos são digitais.</li>
+<li>Não há reembolso após entrega.</li>
+<li>Ranking pode ser resetado a qualquer momento.</li>
+<li>Uso indevido resultará em bloqueio.</li>
+</ul>
 </section>
 
-<!-- LOGIN -->
+<!-- ================= MINIGAME ================= -->
+<section id="minigame">
+<h2>Minigame - Clique Rápido</h2>
+<p id="loginWarning"></p>
+<button onclick="playGame()">CLIQUE</button>
+<p>Pontuação: <span id="score">0</span></p>
+
+<h3>Top 100</h3>
+<table>
+<thead>
+<tr><th>#</th><th>Usuário</th><th>Pontos</th></tr>
+</thead>
+<tbody id="rankingBody"></tbody>
+</table>
+</section>
+
+<!-- ================= LOGIN ================= -->
 <section id="login">
-<h2>Registro</h2>
-<input type="email" id="regEmail" placeholder="Email">
-<input type="text" id="regUser" placeholder="Username">
-<input type="password" id="regPass" placeholder="Senha">
-<button class="btn" onclick="register()">Registrar</button>
-
-<h2>Login</h2>
-<input type="email" id="logEmail" placeholder="Email">
-<input type="password" id="logPass" placeholder="Senha">
-<button class="btn" onclick="login()">Entrar</button>
-
-<p id="userInfo"></p>
-</section>
-
-<!-- GAMES -->
-<section id="games">
-<h2>🎮 Click Speed</h2>
-<button class="btn" onclick="startGame()">Jogar</button>
-<p id="result"></p>
-
-<h2>🏆 Top 100 Global</h2>
-<div id="rankingList"></div>
+<div class="login-box">
+<h2>Login / Registro</h2>
+<input type="text" id="username" placeholder="Usuário único">
+<input type="password" id="password" placeholder="Senha">
+<button onclick="register()">Registrar</button>
+<button onclick="loginUser()">Entrar</button>
+<p id="loginStatus"></p>
+</div>
 </section>
 
 <script>
+
+/* ================= NAVEGAÇÃO ================= */
+function show(id){
+document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+/* ================= PRODUTOS ================= */
+
+const divinosList = [
+"Bulbito Bandito Traktorito","Burgerini Bearini","Martino Gravitino",
+"Grappellino D'Oro","Elefante de Morango","Din Din Vaultero",
+"Glacierello Infernetti","Explodini Cataclismi","Biscotti Macarotti",
+"Pastapot Infernetto","Galactio Fantasma","Rubichetto Cubini",
+"Freezeti Cobretti","Cupitron Consoletron","Draculini Meowlini"
+];
+
+const infinityList = [
+"Noobini Infeeny","Anububu","Meta Technetta","Magmew"
+];
+
+divinosList.forEach(name=>{
+document.getElementById("divinos").innerHTML+=
+`<div class="card">${name}</div>`;
+});
+
+infinityList.forEach(name=>{
+document.getElementById("infinity").innerHTML+=
+`<div class="card infinity">${name}</div>`;
+});
+
+/* ================= SUPABASE ================= */
+
 const supabase = window.supabase.createClient(
 "https://ijrivkgrmkqhtmqpgqms.supabase.co",
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlqcml2a2dybWtxaHRtcXBncW1zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1NzkxNjksImV4cCI6MjA4ODE1NTE2OX0.DFK7UBlhkgFchZT0ZDJS3Gc-_wZ6j9ejgPV6c5QtS0k"
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 );
 
-let currentUser=null;
+let currentUser = null;
 
-function show(id){
-document.querySelectorAll("section").forEach(s=>s.classList.remove("active"))
-document.getElementById(id).classList.add("active")
-}
+/* ================= LOGIN ================= */
 
-/* PRODUTOS */
-function divinos(){
-let nomes=["Bulbito Bandito Traktorito","Burgerini Bearini","Martino Gravitino","Grappellino D'Oro","Elefante de Morango","Din Din Vaultero","Glacierello Infernetti","Explodini Cataclismi","Biscotti Macarotti","Pastapot Infernetto","Galactio Fantasma","Rubichetto Cubini","Freezeti Cobretti","Cupitron Consoletron","Draculini Meowlini"]
-let html=""
-nomes.forEach(n=>html+=`<div class="card">${n}<br><button class="btn">Comprar</button></div>`)
-document.getElementById("produtos").innerHTML=html
-}
-
-function infinity(){
-let nomes=["Noobini Infeeny","Anububu","Meta Technetta","Magmew"]
-let html=""
-nomes.forEach(n=>html+=`<div class="card">${n}<br><button class="btn rgb">Comprar</button></div>`)
-document.getElementById("produtos").innerHTML=html
-}
-
-/* AUTH */
 async function register(){
-let email=regEmail.value
-let username=regUser.value
-let password=regPass.value
+let username = document.getElementById("username").value;
+let password = document.getElementById("password").value;
 
-let { data:existing } = await supabase.from("users").select("username").eq("username",username)
-if(existing.length>0){alert("Username já existe!");return;}
+let { data } = await supabase.from("users").select("*").eq("username", username);
 
-await supabase.from("users").insert([{email,username,password}])
-alert("Registrado!")
+if(data.length > 0){
+document.getElementById("loginStatus").innerText="Usuário já existe!";
+return;
 }
 
-async function login(){
-let email=logEmail.value
-let password=logPass.value
-let { data } = await supabase.from("users").select("*").eq("email",email).eq("password",password)
-if(data.length===0){alert("Login inválido");return;}
-currentUser=data[0]
-userInfo.innerText="Logado como "+currentUser.username
+await supabase.from("users").insert([{username,password}]);
+document.getElementById("loginStatus").innerText="Registrado!";
 }
 
-/* GAME */
-function startGame(){
-if(!currentUser){alert("⚠ Você não está registrado. Record não será salvo.");}
-let clicks=0
-document.body.onclick=()=>clicks++
-setTimeout(async()=>{
-document.body.onclick=null
-result.innerText="Score: "+clicks
+async function loginUser(){
+let username = document.getElementById("username").value;
+let password = document.getElementById("password").value;
+
+let { data } = await supabase.from("users")
+.select("*")
+.eq("username", username)
+.eq("password", password);
+
+if(data.length > 0){
+currentUser = data[0];
+document.getElementById("loginStatus").innerText="Logado!";
+}else{
+document.getElementById("loginStatus").innerText="Erro no login";
+}
+}
+
+/* ================= GAME ================= */
+
+let score = 0;
+
+async function playGame(){
+
+if(!currentUser){
+document.getElementById("loginWarning").innerText=
+"⚠ Faça login para salvar seu record!";
+}
+
+score++;
+document.getElementById("score").innerText=score;
+
 if(currentUser){
-await supabase.from("ranking").insert([{username:currentUser.username,score:clicks}])
-loadRanking()
+await supabase.from("ranking").insert([
+{username:currentUser.username, score:score}
+]);
+loadRanking();
 }
-},5000)
 }
 
-/* RANKING */
+/* ================= RANKING ================= */
+
 async function loadRanking(){
-let { data } = await supabase.from("ranking").select("*").order("score",{ascending:false}).limit(100)
-let html=""
-data.forEach((p,i)=>{
-let medal=""
-let cls=""
-if(i===0){medal="🥇";cls="gold"}
-else if(i===1){medal="🥈";cls="silver"}
-else if(i===2){medal="🥉";cls="bronze"}
-html+=`<p class="${cls}">${i+1}. ${medal} ${p.username} - ${p.score}</p>`
-})
-rankingList.innerHTML=html
+let { data } = await supabase
+.from("ranking")
+.select("*")
+.order("score",{ascending:false})
+.limit(100);
+
+let body="";
+data.forEach((r,i)=>{
+let medal="";
+if(i==0) medal="gold";
+if(i==1) medal="silver";
+if(i==2) medal="bronze";
+
+body+=`<tr>
+<td class="${medal}">${i+1}</td>
+<td>${r.username}</td>
+<td>${r.score}</td>
+</tr>`;
+});
+
+document.getElementById("rankingBody").innerHTML=body;
 }
-loadRanking()
+
+loadRanking();
+
+/* ================= PARTICULAS ================= */
+
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+for(let i=0;i<100;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2,
+d:Math.random()*1
+});
+}
+
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="rgba(0,191,255,0.7)";
+particles.forEach(p=>{
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fill();
+p.y+=p.d;
+if(p.y>canvas.height) p.y=0;
+});
+requestAnimationFrame(draw);
+}
+draw();
 
 </script>
 </body>
