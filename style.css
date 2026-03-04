@@ -1,0 +1,89 @@
+body{
+margin:0;
+background:#0a0f1c;
+color:white;
+font-family:Arial;
+overflow-x:hidden;
+}
+
+#particles{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+z-index:-1;
+pointer-events:none;
+}
+
+header{
+text-align:center;
+padding:25px;
+background:#11182b;
+}
+
+.glow-title{
+font-size:32px;
+background:linear-gradient(90deg,#00bfff,#ffffff,#00bfff);
+background-size:200% auto;
+-webkit-background-clip:text;
+color:transparent;
+animation:shine 4s linear infinite;
+}
+
+@keyframes shine{
+0%{background-position:0%}
+100%{background-position:200%}
+}
+
+nav{
+display:flex;
+justify-content:center;
+gap:15px;
+padding:15px;
+background:#0f1629;
+}
+
+nav button{
+background:#18223d;
+border:none;
+padding:10px 20px;
+color:white;
+border-radius:8px;
+cursor:pointer;
+}
+
+nav button:hover{
+background:#00bfff;
+}
+
+.page{display:none;padding:30px;}
+.page.active{display:block;}
+
+.grid{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.card{
+background:#131c33;
+padding:15px;
+border-radius:10px;
+min-width:200px;
+}
+
+.rgb-title{
+animation:rgb 3s linear infinite;
+}
+
+@keyframes rgb{
+0%{color:red}
+33%{color:lime}
+66%{color:blue}
+100%{color:red}
+}
+
+.gold{color:gold}
+.silver{color:silver}
+.bronze{color:#cd7f32}
